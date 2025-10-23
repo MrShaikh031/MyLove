@@ -5,9 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Do You Love Me?</title>
   <style>
-    * {margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",sans-serif;}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
     body {
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -16,17 +22,20 @@
       overflow: hidden;
       position: relative;
     }
-    h1 {color:white;font-size:2.5em;text-shadow:0 0 10px #fff, 0 0 20px #ff0066;margin-bottom:50px;text-align:center;}
+
+    h1 {
+      color: white;
+      font-size: 2.5em;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ff0066;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+
     .buttons {
       display: flex;
       gap: 30px;
-      position: relative;
-      width: 300px; /* set a width so absolute buttons don't fly offscreen */
-      height: 120px; /* give room for movement */
-      justify-content: center;
-      align-items: center;
-      margin: auto;
     }
+
     button {
       font-size: 1.2em;
       padding: 15px 30px;
@@ -34,34 +43,45 @@
       border-radius: 50px;
       cursor: pointer;
       transition: all 0.3s ease;
-      position: relative;
-      z-index: 2;
     }
+
     #yesBtn {
       background-color: #ff4d79;
       color: white;
       box-shadow: 0 0 15px #ff3366;
     }
-    #yesBtn:hover {background-color: #ff3366;transform: scale(1.1);}
+
+    #yesBtn:hover {
+      background-color: #ff3366;
+      transform: scale(1.1);
+    }
+
     #noBtn {
       background-color: white;
       color: #ff4d79;
       box-shadow: 0 0 10px #fff;
       position: absolute;
-      left: 150px; /* default center-ish position */
-      top: 30px;
     }
+
+    /* Floating hearts animation */
     @keyframes floatHearts {
-      0% {transform:translateY(0) scale(1);opacity:1;}
-      100% {transform:translateY(-100vh) scale(0.5);opacity:0;}
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(0.5);
+        opacity: 0;
+      }
     }
+
     .heart {
       position: absolute;
-      color: rgba(255,255,255,0.8);
+      color: rgba(255, 255, 255, 0.8);
       font-size: 20px;
       animation: floatHearts 5s linear infinite;
-      left: 50vw;
     }
+
     .message {
       color: #fff;
       font-size: 2em;
@@ -70,51 +90,36 @@
       text-shadow: 0 0 20px #fff, 0 0 40px #ff0066;
       display: none;
     }
-    /* Responsive */
-    @media (max-width: 600px) {
-      .buttons {width: 90vw; height: 120px;}
-      button {font-size:1em;padding:12px 20px;}
-      h1,.message {font-size:1.5em;}
-    }
   </style>
 </head>
 <body>
   <h1>Do You Love Me? 💖</h1>
-  <div class="buttons" id="btns">
+
+  <div class="buttons">
     <button id="yesBtn">Yes 💕</button>
     <button id="noBtn">No 😭</button>
   </div>
+
   <div class="message" id="message">Aww! I knew it ❤️ You’re my everything 💞</div>
+
   <script>
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
     const message = document.getElementById("message");
-    const btns = document.getElementById("btns");
 
-    // Move No button randomly when hovered or tapped
-    function moveNoBtn() {
-      // Get container bounds for mobile-friendly movement
-      const rect = btns.getBoundingClientRect();
-      // safe margin so button doesn't go offscreen
-      const maxX = rect.width - noBtn.offsetWidth;
-      const maxY = rect.height - noBtn.offsetHeight;
-      // random position within container
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
+    // Move No button randomly when hovered or clicked
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
       noBtn.style.left = `${x}px`;
       noBtn.style.top = `${y}px`;
-    }
-
-    // Mouse events
-    noBtn.addEventListener("mouseover", moveNoBtn);
-    noBtn.addEventListener("click", moveNoBtn);
-
-    // Touch event for mobile
-    noBtn.addEventListener("touchstart", function(e){
-      e.preventDefault();
-      moveNoBtn();
     });
-
+    noBtn.addEventListener("click", () => {
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+    });
     yesBtn.addEventListener("click", () => {
       message.style.display = "block";
       yesBtn.style.display = "none";
@@ -127,7 +132,7 @@
       setInterval(() => {
         const heart = document.createElement("div");
         heart.classList.add("heart");
-        heart.style.left = Math.random() * 95 + "vw";
+        heart.style.left = Math.random() * 100 + "vw";
         heart.style.fontSize = Math.random() * 20 + 10 + "px";
         heart.textContent = "💖";
         document.body.appendChild(heart);
